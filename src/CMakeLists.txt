@@ -13,6 +13,7 @@ set(ERROR_FLAGS "-Wall -Wextra -Wshadow")
 
 add_executable(cthemegen ${cthemegen_src})
 target_include_directories(cthemegen PRIVATE ext)
+target_link_libraries(cthemegen fmt::fmt)
 set_target_properties(cthemegen
         PROPERTIES
         COMPILE_FLAGS ${ERROR_FLAGS}
