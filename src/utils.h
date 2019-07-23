@@ -4,7 +4,9 @@
 #include <string>
 
 bool file_exists(std::string filePath);
-
 bool dir_exists(std::string filePath);
+
+void compile_theme(std::string theme);
+
 
 #endif // INCLUDE_GUARD_

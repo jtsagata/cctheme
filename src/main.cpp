@@ -2,41 +2,20 @@
 #include "utils.h"
 
 #include <cxxopts.hpp>
-#include <filesystem>
-#include <inja.hpp>
-
 #include <iostream>
 #include <string>
 
 cxxopts::ParseResult parse_args(int argc, char *argv[]);
-void compile_theme(std::string theme);
-
-using json = nlohmann::json;
-using path = std::filesystem::path;
 
 int main(int argc, char *argv[]) {
 
     auto result = parse_args(argc, argv);
     auto themes = result["themes"].as<std::vector<std::string>>();
 
-    for(auto &theme : themes) {
+    for (auto &theme : themes) {
         compile_theme(theme);
     }
-
-    path base_dir = {BASE_DIR};
-
-    inja::Environment env;
-    path json_file{"../data/schemes/SolarizedDark.json"};
-    path template_file{"../data/templates/_gnome-terminal.sh"};
-    path result_file{"../data/scripts/gnome-terminal.sh"};
-
-    //    env.write_with_json_file(template_file,json_file,result_file);
 }
-
-void compile_theme(std::string theme) {
-    std::cout << "Compiling theme " << theme << "\n";
-}
-
 
 cxxopts::ParseResult parse_args(int argc, char *argv[]) {
     try {
@@ -65,7 +44,7 @@ cxxopts::ParseResult parse_args(int argc, char *argv[]) {
             exit(EXIT_SUCCESS);
         }
 
-        if(!result.count("themes")) {
+        if (!result.count("themes")) {
             std::cerr << "Error: No themes given\n";
             exit(EXIT_FAILURE);
         }
