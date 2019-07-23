@@ -1,13 +1,10 @@
-#include "stdafx.h"
-using json = nlohmann::json;
-
-using namespace inja;
+#include <iostream>
+#include <inja.hpp>
 using json = nlohmann::json;
 
 int main() {
     json data;
-    data["name"] = "world";
+    data["color"] = "#FA00DD";
 
-    render("Hello {{ name }}!", data); // Returns std::string "Hello world!"
-    render_to(std::cout, "Hello {{ name }}!", data); // Prints "Hello world!"    return 0;
+    inja::render_to(std::cout, "HTML name  {{ color }}", data); // Prints "Hello world!"    return 0;
 }
