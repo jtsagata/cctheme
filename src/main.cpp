@@ -7,19 +7,30 @@
 
 cxxopts::ParseResult parse_args(int argc, char *argv[]);
 
+bool do_verbose = false;
+bool do_force = true;
+
 int main(int argc, char *argv[]) {
 
     auto result = parse_args(argc, argv);
     auto themes = result["themes"].as<std::vector<std::string>>();
 
+    int exit_status = EXIT_SUCCESS;
     for (auto &theme : themes) {
-        compile_theme(theme);
+        auto res = compile_theme(theme, do_force, do_verbose);
+        if (res != 0) {
+            exit_status = res;
+        }
     }
+    return exit_status;
 }
 
 cxxopts::ParseResult parse_args(int argc, char *argv[]) {
     try {
         cxxopts::Options options(PROJECT_NAME, PROJECT_DESCRIPTION);
+
+        options.add_options()("f,force", "Force generation", cxxopts::value(do_force));
+        options.add_options()("d,debug", "Verbose output", cxxopts::value(do_verbose));
         options.add_options()("v,version", "Show program version");
         options.add_options()("h,help", "Show program help");
         options.add_options()("t,themes", "themes to compile",

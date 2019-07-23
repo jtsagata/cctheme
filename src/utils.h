@@ -6,7 +6,7 @@
 bool file_exists(std::string filePath);
 bool dir_exists(std::string filePath);
 
-void compile_theme(std::string theme);
+bool compile_theme(std::string theme, bool force=true, bool verbose=true);
 
 
 #endif // INCLUDE_GUARD_
