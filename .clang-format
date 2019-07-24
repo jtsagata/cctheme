@@ -13,4 +13,5 @@ BraceWrapping:
   AfterNamespace:  true
 
 BreakConstructorInitializers: BeforeComma
-AllowShortIfStatementsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: Always
+AlwaysBreakTemplateDeclarations:  Yes

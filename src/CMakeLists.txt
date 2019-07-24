@@ -7,7 +7,7 @@ configure_file(
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # The scheme generator
-set(cthemegen_src main.cpp utils.cpp utils.h compile.cpp)
+set(cthemegen_src main.cpp utils.cpp utils.h compile.cpp tty_colors.h)
 
 set(ERROR_FLAGS "-Wall -Wextra -Wshadow")
 

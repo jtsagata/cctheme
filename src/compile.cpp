@@ -1,12 +1,11 @@
 #include <filesystem>
 #include <inja.hpp>
-#include <rang.hpp>
 
+#include "tty_colors.h"
 #include "utils.h"
 
 using json = nlohmann::json;
 using path = std::filesystem::path;
-using namespace rang;
 
 //    path base_dir = {BASE_DIR};
 //
@@ -17,16 +16,15 @@ using namespace rang;
 
 //    env.write_with_json_file(template_file,json_file,result_file);
 
-bool compile_theme(std::string theme, bool force, bool verbose) {
+bool compile_theme(const std::string &theme, bool do_force, bool do_verbose) {
     path theme_path;
     if (file_exists(theme)) {
         theme_path = theme;
     } else {
-        auto fname = theme + ".json";
-        theme_path = path{"data/schemes/"} / fname;
+        auto fName = theme + ".json";
+        theme_path = path{"data/schemes/"} / fName;
         if (!file_exists(theme_path)) {
-            std::cerr << style::bold << fg::red << "Error:" << style::reset << fg::reset
-                      << "theme not found.\n";
+            printError("Theme not found.");
             return false;
         }
     }
@@ -34,24 +32,21 @@ bool compile_theme(std::string theme, bool force, bool verbose) {
     {
         std::ifstream my_file(theme_path);
         if (!my_file.good()) {
-            auto cannonical_path = std::filesystem::canonical(theme_path);
-            std::cerr << style::bold << fg::red << "Error:" << style::reset << fg::reset << " file "
-                      << cannonical_path << " is not readable.\n";
+            auto canonicalPath = std::filesystem::canonical(theme_path);
+            printError("file '{}' is not readable.{}\n", canonicalPath.c_str());
             return false;
         }
     }
 
     // Theme path now contains a valid json path name.
     auto stem = theme_path.stem();
-    std::cout << "Compiling theme " << style::bold << fg::green << stem << style::reset << fg::reset
-              << ".\n";
 
     auto script_path = path{"data/scripts/"} / stem;
     if (!dir_exists(script_path)) {
         std::filesystem::create_directories(script_path);
     } else {
-        if (force == false) {
-            std::cout << "Directory exists, skipping \n";
+        if (!do_force) {
+            printInfoVerbose(do_verbose, "Directory '{}' exists, skipping \n", script_path.c_str());
             return false;
         }
     }

@@ -1,11 +1,11 @@
 #include "config.h"
+#include "tty_colors.h"
 #include "utils.h"
-
 #include <cxxopts.hpp>
 #include <filesystem>
-#include <fmt/core.h>
 #include <string>
 
+// Forward declarations
 cxxopts::ParseResult parse_args(int argc, char *argv[]);
 
 bool do_verbose = false;
@@ -13,7 +13,6 @@ bool do_force = true;
 bool do_all = false;
 
 int main(int argc, char *argv[]) {
-
     auto result = parse_args(argc, argv);
     std::vector<std::string> themes;
 
@@ -34,7 +33,6 @@ int main(int argc, char *argv[]) {
 
     int exit_status = EXIT_SUCCESS;
     for (auto &theme : themes) {
-        fmt::print("{}", theme);
         auto res = compile_theme(theme, do_force, do_verbose);
         if (res != 0) {
             exit_status = res;
@@ -73,14 +71,14 @@ cxxopts::ParseResult parse_args(int argc, char *argv[]) {
             exit(EXIT_SUCCESS);
         }
 
-        if (!result.count("themes") && (do_all == false)) {
-            fmt::print(stderr, "Error: No themes given\n");
+        if (!result.count("themes") && !do_all) {
+            printError(stderr, "Error: No themes given\n");
             exit(EXIT_FAILURE);
         }
 
         return result;
     } catch (const cxxopts::OptionException &e) {
-        fmt::print(stderr, "Error parsing options: {}.\n", e.what());
+        printError(stderr, "Error parsing options: {}.\n", e.what());
         exit(EXIT_FAILURE);
     }
 }
