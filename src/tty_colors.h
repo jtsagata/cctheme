@@ -3,9 +3,12 @@
 
 #include <fmt/color.h>
 #include <fmt/core.h>
+
 #include <set>
 #include <string>
 #include <unistd.h>
+
+using namespace fmt::literals;
 
 inline bool isColorTerm() {
     using stringSet = std::set<std::string>;

@@ -17,6 +17,8 @@ using path = std::filesystem::path;
 //    env.write_with_json_file(template_file,json_file,result_file);
 
 bool compile_theme(const std::string &theme, bool do_force, bool do_verbose) {
+    printInfoVerbose(do_verbose, "Compiling  theme '{theme:s}'.\n", "theme"_a = theme);
+
     path theme_path;
     if (file_exists(theme)) {
         theme_path = theme;
@@ -33,7 +35,7 @@ bool compile_theme(const std::string &theme, bool do_force, bool do_verbose) {
         std::ifstream my_file(theme_path);
         if (!my_file.good()) {
             auto canonicalPath = std::filesystem::canonical(theme_path);
-            printError("file '{}' is not readable.{}\n", canonicalPath.c_str());
+            printError("File '{path:s}' is not readable.\n", "path"_a = canonicalPath.c_str());
             return false;
         }
     }
@@ -46,7 +48,8 @@ bool compile_theme(const std::string &theme, bool do_force, bool do_verbose) {
         std::filesystem::create_directories(script_path);
     } else {
         if (!do_force) {
-            printInfoVerbose(do_verbose, "Directory '{}' exists, skipping \n", script_path.c_str());
+            printInfoVerbose(do_verbose, "Directory '{dir:s}' exists, skipping \n",
+                             "dir"_a = script_path.c_str());
             return false;
         }
     }
