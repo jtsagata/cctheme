@@ -1,0 +1,176 @@
+#!/usr/bin/env bash
+curr_dir=$(pwd)
+
+function build_with_cmake() {
+  cmake .. \
+      -DCMAKE_BUILD_TYPE="${build_type}" -G "${GENERATOR}" \
+      -DCMAKE_TOOLCHAIN_FILE=support/clang-toolchain.cmake
+  return $?
+}
+
+
+reset=$(tput sgr0)
+  red=$(tput sgr0; tput setaf 1)
+green=$(tput sgr0; tput setaf 2)
+
+build_type='debug'
+generator='make'
+verbose=false
+show_options=false
+jobs="$(nproc)"
+
+function print_options() {
+  echo "Build type : ${green}${build_type}${reset}"
+  echo "Build dir  : ${green}${build_dir}${reset}"
+  echo "Generator  : ${green}${generator}${reset}"
+  echo "Verbose    : ${green}${verbose}${reset}"
+  echo "Threads    : ${green}${jobs}${reset}"
+}
+
+function show_help() {
+  echo "ct-build [--clean] [options] -- run_cmd opts"
+  echo "  -c, --clean[=what]  Clean project"
+  echo "  -b  release|debug   Set build type (default debug)"
+  echo "      --build=release|debug "
+  echo "  -g  make|ninja      Set generator (default make)"
+  echo "      --generator=...    "
+  echo "  -v, --verbose       Verbose print"
+  echo "  -d, --debug         Print debug info"
+  echo "  -h, --show_help     Show this"
+}
+
+function clean_build_dir() {
+  what=$1
+  if [[ "${what}" == "" ]]; then
+    rm -rf cmake-build-*
+    echo "${green}All project builds cleared${reset}"
+  else
+    build_dir=$(get_build_dir "${what}")
+    rm -rf "${build_dir}"
+   echo "${green}Project build '${what}' cleared${reset}"
+  fi
+}
+
+function get_build_dir() {
+  echo "cmake-build-${1}"
+}
+
+function set_generator() {
+  case ${generator} in
+  "make" )
+    BUILDER=$(command -v make)
+    GENERATOR="CodeBlocks - Unix Makefiles"
+    VERBOSE_FLAG='VERBOSE=1'
+    ;;
+  "ninja" )
+    BUILDER=$(command -v ninja)
+    GENERATOR="CodeBlocks - Ninja"
+    VERBOSE_FLAG='-v'
+    ;;
+  *)
+    echo "${red}Unknown generator.${reset}"
+    exit 1
+    ;;
+  esac
+}
+
+
+options=$(getopt -o chdgv:b:j: --long clean::,help,debug,verbose,generator:,build:,jobs: -- "$@")
+[ $? -eq 0 ] || {
+    echo "${red}Incorrect options provided.${reset}"
+    exit 1
+}
+eval set -- "$options"
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -h | --help )
+    show_help
+    shift
+    exit 0
+    ;;
+  -d | --debug )
+    show_options=true
+    shift
+    ;;
+  -v | --verbose )
+    verbose=true
+    shift
+    ;;
+  -g | --generator )
+    generator="$2"
+    shift 2
+    ;;
+  -b | --build )
+    build_type="$2"
+    shift 2
+    ;;
+  -j | --jobs )
+    jobs="$2"
+    shift 2
+    ;;
+  -c )
+    clean_build_dir ""
+    shift
+    ;;
+  --clean )
+    clean_build_dir "$2"
+    shift 2
+    ;;
+  -- )
+      shift
+      break
+      ;;
+  *)
+    echo "Internal error!"
+    exit 1
+    ;;
+  esac
+done
+
+build_dir=$(get_build_dir ${build_type})
+set_generator
+
+if [ "$show_options" = true ]; then
+  print_options
+fi
+
+if [[ "${verbose}" == "false" ]] ; then
+    VERBOSE_FLAG=""
+fi
+
+#
+# Step 1: Configure
+#
+if [ ! -d "${build_dir}" ]; then
+  mkdir -p "${build_dir}"
+  pushd "${build_dir}" > /dev/null || exit
+
+  build_with_cmake
+  res=$?
+  if [ $res -eq 0 ]; then
+      echo "${green}Configure OK${reset}"
+  else
+      echo "${red}Configure FAILED${reset}"
+      exit $res
+  fi
+fi
+
+#
+# Step 2: Build
+#
+cd ${build_dir} || exit
+${BUILDER} -j "${jobs}"  ${VERBOSE_FLAG}
+res=$?
+if [ $res -eq 0 ]; then
+    echo "${green}Build OK${reset}"
+else
+    echo "${red}Build FAILED${reset}"
+    exit $res
+fi
+
+#
+# Step 3: Run
+#
+
+cd "$curr_dir" || exit
+sh -c "$@"
