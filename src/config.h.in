@@ -11,6 +11,8 @@
 #define GIT_REVISION  "@GIT_REVISION@"
 #define BASE_DIR      "@PROJECT_SOURCE_DIR@"
 
+static const char *const ThemePathDir = "data/themes/";
+static const char *const DataSchemeDir = "data/schemes/";
 
 #endif // INCLUDE_GUARD_CONFIG_H
 

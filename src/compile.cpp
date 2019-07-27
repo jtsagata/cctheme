@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <inja.hpp>
 
+#include "config.h"
 #include "tty_colors.h"
 #include "utils.h"
 
@@ -24,7 +25,7 @@ bool compile_theme(const std::string &theme, bool do_force, bool do_verbose) {
         theme_path = theme;
     } else {
         auto fName = theme + ".json";
-        theme_path = path{"data/schemes/"} / fName;
+        theme_path = path{DataSchemeDir} / fName;
         if (!file_exists(theme_path)) {
             printError("Theme not found.");
             return false;
@@ -43,7 +44,7 @@ bool compile_theme(const std::string &theme, bool do_force, bool do_verbose) {
     // Theme path now contains a valid json path name.
     auto stem = theme_path.stem();
 
-    auto script_path = path{"data/scripts/"} / stem;
+    auto script_path = path{ThemePathDir} / stem;
     if (!dir_exists(script_path)) {
         std::filesystem::create_directories(script_path);
     } else {

@@ -47,8 +47,8 @@ cxxopts::ParseResult parse_args(int argc, char *argv[]) {
 
         options.add_options()("a,all", "Compile all schemes", cxxopts::value(do_all));
         options.add_options()("f,force", "Force generation", cxxopts::value(do_force));
-        options.add_options()("d,debug", "Verbose output", cxxopts::value(do_verbose));
-        options.add_options()("v,version", "Show program version");
+        options.add_options()("v,verbose", "Verbose output", cxxopts::value(do_verbose));
+        options.add_options()("version", "Show program version");
         options.add_options()("h,help", "Show program help");
         options.add_options()("t,themes", "themes to compile",
                               cxxopts::value<std::vector<std::string>>());

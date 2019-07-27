@@ -74,7 +74,7 @@ function set_generator() {
 }
 
 
-options=$(getopt -o chdg:v:b:j: --long clean::,help,debug,verbose,generator:,build:,jobs: -- "$@")
+options=$(getopt -o chdg:vb:j: --long clean::,help,debug,verbose,generator:,build:,jobs: -- "$@")
 [ $? -eq 0 ] || {
     echo "${red}Incorrect options provided.${reset}"
     exit 1
