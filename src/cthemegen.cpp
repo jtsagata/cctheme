@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     } else {
         using path = std::filesystem::path;
         using std::filesystem::directory_iterator;
-        auto theme_path = path{"data/schemes/"};
+        auto theme_path = path{DataSchemeDir};
         for (const auto &entry : directory_iterator(theme_path)) {
             auto extension = entry.path().extension();
             if (extension == ".json") {

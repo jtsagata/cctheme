@@ -13,6 +13,7 @@
 
 static const char *const ThemePathDir = "data/themes/";
 static const char *const DataSchemeDir = "data/schemes/";
+static const char *const DataTemplatesDir = "data/templates/";
 
 #endif // INCLUDE_GUARD_CONFIG_H
 

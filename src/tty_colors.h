@@ -4,9 +4,15 @@
 #include <fmt/color.h>
 #include <fmt/core.h>
 
+#include <filesystem>
 #include <set>
 #include <string>
 #include <unistd.h>
+
+namespace fmt {
+    template <>
+    struct formatter<std::filesystem::path> : formatter<std::string> {};
+} // namespace fmt
 
 using namespace fmt::literals;
 
