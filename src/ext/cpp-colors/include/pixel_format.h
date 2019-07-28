@@ -67,7 +67,7 @@ namespace colors {
         static const pixel_format::pixel_format format = pixel_format::bgr24;
 
         // Tha name of the format
-        static const char *const name() { return "R8G8B8 (Bgr24)"; }
+        static const char *name() { return "R8G8B8 (Bgr24)"; }
 
         // The number of bytes one element takes (size per element)
         static const uint8_t size = 3;
@@ -104,7 +104,7 @@ namespace colors {
         static const pixel_format::pixel_format format = pixel_format::color;
 
         // Tha name of the format
-        static const char *const name() { return "A8R8G8B8 (Bgra32)"; }
+        static const char *name() { return "A8R8G8B8 (Bgra32)"; }
 
         // The number of bytes one element takes (size per element)
         static const uint8_t size = 4;
@@ -141,7 +141,7 @@ namespace colors {
         static const pixel_format::pixel_format format = pixel_format::bgr32;
 
         // Tha name of the format
-        static const char *const name() { return "X8R8G8B8 (Bgr32)"; }
+        static const char *name() { return "X8R8G8B8 (Bgr32)"; }
 
         // The number of bytes one element takes (size per element)
         static const uint8_t size = 4;
@@ -178,7 +178,7 @@ namespace colors {
         static const pixel_format::pixel_format format = pixel_format::rgba32;
 
         // Tha name of the format
-        static const char *const name() { return "A8B8G8R8 (Rgba32)"; }
+        static const char *name() { return "A8B8G8R8 (Rgba32)"; }
 
         // The number of bytes one element takes (size per element)
         static const uint8_t size = 4;
@@ -215,7 +215,7 @@ namespace colors {
         static const pixel_format::pixel_format format = pixel_format::rgb32;
 
         // Tha name of the format
-        static const char *const name() { return "X8R8G8B8 (Rgb32)"; }
+        static const char *name() { return "X8R8G8B8 (Rgb32)"; }
 
         // The number of bytes one element takes (size per element)
         static const uint8_t size = 4;
@@ -252,7 +252,7 @@ namespace colors {
         static const pixel_format::pixel_format format = pixel_format::bgr565;
 
         // Tha name of the format
-        static const char *const name() { return "R5G6B5 (Bgr565)"; }
+        static const char *name() { return "R5G6B5 (Bgr565)"; }
 
         // The number of bytes one element takes (size per element)
         static const uint8_t size = 2;
@@ -289,7 +289,7 @@ namespace colors {
         static const pixel_format::pixel_format format = pixel_format::bgr555;
 
         // Tha name of the format
-        static const char *const name() { return "X1R5G5B5 (Bgr555)"; }
+        static const char *name() { return "X1R5G5B5 (Bgr555)"; }
 
         // The number of bytes one element takes (size per element)
         static const uint8_t size = 2;
@@ -326,7 +326,7 @@ namespace colors {
         static const pixel_format::pixel_format format = pixel_format::bgra5551;
 
         // Tha name of the format
-        static const char *const name() { return "A1R5G5B5 (Bgra5551)"; }
+        static const char *name() { return "A1R5G5B5 (Bgra5551)"; }
 
         // The number of bytes one element takes (size per element)
         static const uint8_t size = 2;

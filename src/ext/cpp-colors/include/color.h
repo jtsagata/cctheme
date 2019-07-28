@@ -202,7 +202,7 @@ namespace colors {
         // Creates a basic_color object from the packed color value
         template <typename ST>
         static basic_color create_from_value(typename ST::pixel_type value) {
-            typedef typename ST::pixel_type src_pixel_type;
+            //            typedef typename ST::pixel_type src_pixel_type;
 
             return basic_color(
                 (element_traits_type::template from_channel_value<ST::bits_a, PixelTraits::bits_a>(
@@ -219,7 +219,7 @@ namespace colors {
         template <typename DT>
         typename DT::pixel_type traits_value() const {
             typedef typename DT::pixel_type dest_pixel_type;
-            typedef typename DT::channel_type dest_channel_type;
+            //            typedef typename DT::channel_type dest_channel_type;
 
             dest_pixel_type value =
                 (((static_cast<dest_pixel_type>(element_traits_type::template to_channel_value<
