@@ -13,7 +13,7 @@ set(cthemegen_src
         compile.cpp
         tty_colors.h
         colors.h colors.cpp
-        named_colors.cpp)
+        named_colors.cpp color_conv.cpp)
 
 set(ERROR_FLAGS "-Wall -Wextra -Wshadow")
 
@@ -31,5 +31,5 @@ cotire(cthemegen)
 ## TODO: Proper testing framework like gtest
 ## Test Executable
 add_executable(test_colors EXCLUDE_FROM_ALL colors-test.cpp
-        colors.h colors.cpp named_colors.cpp)
+        colors.h colors.cpp named_colors.cpp color_conv.cpp)
 target_link_libraries(test_colors fmt::fmt)
