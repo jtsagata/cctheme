@@ -25,6 +25,8 @@
 #include "tty_colors.h"
 #include "utils.h"
 
+#include "color.h"
+
 using json = nlohmann::json;
 using path = std::filesystem::path;
 using perms = std::filesystem::perms;
