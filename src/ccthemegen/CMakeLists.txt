@@ -18,7 +18,7 @@ set(cthemegen_src
 set(ERROR_FLAGS "-Wall -Wextra -Wshadow")
 
 add_executable(ccthemegen ${cthemegen_src})
-target_link_libraries(ccthemegen fmt::fmt cxxopts inja)
+target_link_libraries(ccthemegen fmt::fmt cxxopts inja nlohmann_json)
 
 set_target_properties(ccthemegen
         PROPERTIES
