@@ -1,2 +1,2 @@
 add_subdirectory(ext/fmt EXCLUDE_FROM_ALL)
-add_subdirectory(cthemegen)
+add_subdirectory(ccthemegen)

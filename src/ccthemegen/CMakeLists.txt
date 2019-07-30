@@ -8,7 +8,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # The scheme generator
 set(cthemegen_src
-        cthemegen.cpp
+        ccthemegen.cpp
         utils.cpp utils.h
         compile.cpp
         tty_colors.h
@@ -17,16 +17,16 @@ set(cthemegen_src
 
 set(ERROR_FLAGS "-Wall -Wextra -Wshadow")
 
-add_executable(cthemegen ${cthemegen_src})
-target_include_directories(cthemegen PRIVATE ../ext)
+add_executable(ccthemegen ${cthemegen_src})
+target_include_directories(ccthemegen PRIVATE ../ext)
 
-target_link_libraries(cthemegen fmt::fmt)
-set_target_properties(cthemegen
+target_link_libraries(ccthemegen fmt::fmt)
+set_target_properties(ccthemegen
         PROPERTIES
         COMPILE_FLAGS ${ERROR_FLAGS}
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}
         )
-cotire(cthemegen)
+cotire(ccthemegen)
 
 ## TODO: Proper testing framework like gtest
 ## Test Executable

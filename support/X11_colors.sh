@@ -28,4 +28,4 @@ awk -f \
 
   $1 !~ /^!/ { printf "\t{%-22s,rgb_color{%-3d,%-3d,%-3d,255} }, // #%02X%02X%02X\n", sprintf("\"%s\"", tolower($4)), $1,$2,$3, $1,$2,$3 }
 EOD
-) < rgb.txt > $(dirname "$0")/../src/cthemegen/named_colors.cpp
+) < rgb.txt > $(dirname "$0")/../src/ccthemegen/named_colors.cpp
