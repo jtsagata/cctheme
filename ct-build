@@ -20,10 +20,18 @@
 #
 curr_dir=$(pwd)
 
-function build_with_cmake() {
-  cmake .. \
-      -DCMAKE_BUILD_TYPE="${build_type}" -G "${GENERATOR}" \
-      -DCMAKE_TOOLCHAIN_FILE=support/clang-toolchain.cmake
+# TODO: stdlib must be selectable from cmake
+build_with_cmake() {
+  local build_dir=$(get_build_dir "${build_type}")
+  set -x
+  cmake  -B ${build_dir} \
+         -DCMAKE_BUILD_TYPE=${build_type} \
+         -G "${GENERATOR}" \
+         -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+         -DCMAKE_CXX_COMPILER=clang++ \
+         -DCMAKE_CXX_FLAGS=-stdlib=libc++ \
+         "${curr_dir}"
+  set +x
   return $?
 }
 
@@ -37,7 +45,7 @@ verbose=false
 show_options=false
 jobs="$(nproc)"
 
-function print_options() {
+print_options() {
   echo "Build type : ${green}${build_type}${reset}"
   echo "Build dir  : ${green}${build_dir}${reset}"
   echo "Generator  : ${green}${generator}${reset}"
@@ -45,7 +53,7 @@ function print_options() {
   echo "Threads    : ${green}${jobs}${reset}"
 }
 
-function show_help() {
+show_help() {
   echo "ct-build [--clean] [options] -- run_cmd opts"
   echo "  -c, --clean[=what]  Clean project"
   echo "  -b  release|debug   Set build type (default debug)"
@@ -57,7 +65,7 @@ function show_help() {
   echo "  -h, --show_help     Show this"
 }
 
-function clean_build_dir() {
+clean_build_dir() {
   what=$1
   if [[ "${what}" == "" ]]; then
     rm -rf cmake-build-*
@@ -69,11 +77,11 @@ function clean_build_dir() {
   fi
 }
 
-function get_build_dir() {
+get_build_dir() {
   echo "cmake-build-${1}"
 }
 
-function set_generator() {
+set_generator() {
   case ${generator} in
   "make" )
     BUILDER=$(command -v make)
@@ -161,7 +169,7 @@ fi
 #
 if [ ! -d "${build_dir}" ]; then
   mkdir -p "${build_dir}"
-  pushd "${build_dir}" > /dev/null || exit
+#  pushd "${build_dir}" > /dev/null || exit
 
   if build_with_cmake;  then
       echo "${green}Configure OK${reset}"
@@ -169,7 +177,7 @@ if [ ! -d "${build_dir}" ]; then
       echo "${red}Configure FAILED${reset}"
       exit 1
   fi
-  popd || exit
+#  popd || exit
 fi
 
 #
