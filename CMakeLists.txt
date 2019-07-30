@@ -26,6 +26,7 @@ if(cxxopts_ADDED)
     target_include_directories(cxxopts INTERFACE "${cxxopts_SOURCE_DIR}/include")
 endif()
 
+SET(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 
 CPMAddPackage(
         NAME fmt
@@ -85,4 +86,7 @@ CPMAddPackage(
         SOURCE_DIR "${CMAKE_SOURCE_DIR}/ext/catch2"
 )
 
+ENABLE_TESTING()
+
 add_subdirectory(src/ccthemegen)
+add_subdirectory(src/libcolor)

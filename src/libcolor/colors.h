@@ -45,8 +45,10 @@ struct rgb_color {
     explicit rgb_color(std::string spec);
 
     // Formatters
+    std::string hexa();
     std::string hex();
     std::string rgba();
+    std::string rgb();
     std::string hsl();
 };
 

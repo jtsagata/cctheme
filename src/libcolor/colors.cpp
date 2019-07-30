@@ -32,8 +32,12 @@ T clip(const T &n, const T &lower, const T &upper) {
     return std::max(lower, std::min(n, upper));
 }
 
-std::string rgb_color::hex() { return fmt::format("#{:02X}{:02X}{:02X}{:02X}", r, g, b, a); }
+std::string rgb_color::hexa() { return fmt::format("#{:02X}{:02X}{:02X}{:02X}", r, g, b, a); }
+std::string rgb_color::hex() { return fmt::format("#{:02X}{:02X}{:02X}", r, g, b); }
+
 std::string rgb_color::rgba() { return fmt::format("rgba({},{},{},{})", r, g, b, a); }
+std::string rgb_color::rgb() { return fmt::format("rgba({},{},{})", r, g, b); }
+
 std::string rgb_color::hsl() {
     auto hsl = rgb_to_hsl(rgb_color{r, g, b});
     float h = std::get<0>(hsl);
