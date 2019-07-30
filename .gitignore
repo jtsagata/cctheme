@@ -3,6 +3,7 @@
 *.log
 
 /ccthemegen
+/ext
 
 # garbage files
 baza

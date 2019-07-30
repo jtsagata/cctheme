@@ -18,9 +18,8 @@ set(cthemegen_src
 set(ERROR_FLAGS "-Wall -Wextra -Wshadow")
 
 add_executable(ccthemegen ${cthemegen_src})
-target_include_directories(ccthemegen PRIVATE ../ext)
+target_link_libraries(ccthemegen fmt::fmt cxxopts inja)
 
-target_link_libraries(ccthemegen fmt::fmt)
 set_target_properties(ccthemegen
         PROPERTIES
         COMPILE_FLAGS ${ERROR_FLAGS}

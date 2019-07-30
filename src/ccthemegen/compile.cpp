@@ -19,7 +19,7 @@
 //
 
 #include <filesystem>
-#include <inja.hpp>
+#include <inja/inja.hpp>
 
 #include "config.h"
 #include "tty_colors.h"
