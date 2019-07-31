@@ -26,6 +26,7 @@
 #include "utils.h"
 
 #include "colors.h"
+#include "compile_helpers.h"
 
 using json = nlohmann::json;
 using path = std::filesystem::path;
@@ -86,6 +87,16 @@ bool compile_theme(const std::string &theme) {
 bool compile_template(const path &json_file, const path &template_file, const path &theme_out_dir) {
 
     inja::Environment env;
+
+    // # TODO: Implement a calculator and get rid of this hack (Really?)
+    env.add_callback("svg_rect", 2, [](inja::Arguments &args) {
+        int number = args.at(0)->get<int>();
+        std::string color = args.at(1)->get<std::string>();
+        auto res = svg_rect_helper(number, color);
+
+        return res;
+    });
+
     path result_file = theme_out_dir / template_file.filename();
     env.write_with_json_file(template_file, json_file, result_file);
 

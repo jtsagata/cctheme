@@ -12,7 +12,7 @@ set(cthemegen_src
         utils.cpp utils.h
         compile.cpp
         tty_colors.h
-        )
+        compile_helpers.cpp compile_helpers.h)
 
 set(ERROR_FLAGS "-Wall -Wextra -Wshadow")
 
