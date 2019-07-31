@@ -30,6 +30,6 @@
 bool file_exists(const std::string &file_path);
 bool dir_exists(const std::string &file_path);
 
-bool compile_theme(const std::string &theme, bool do_force = true, bool do_verbose = true);
+bool compile_theme(const std::string &theme);
 
 #endif // INCLUDE_GUARD_

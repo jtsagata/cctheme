@@ -28,8 +28,6 @@
 // Forward declarations
 cxxopts::ParseResult parse_args(int argc, char *argv[]);
 
-bool do_verbose = false;
-bool do_force = true;
 bool do_all = false;
 
 int main(int argc, char *argv[]) {
@@ -53,7 +51,7 @@ int main(int argc, char *argv[]) {
 
     int exit_status = EXIT_SUCCESS;
     for (auto &theme : themes) {
-        auto res = compile_theme(theme, do_force, do_verbose);
+        auto res = compile_theme(theme);
         if (res != 0) {
             exit_status = res;
         }

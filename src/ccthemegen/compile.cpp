@@ -34,10 +34,9 @@ using perms = std::filesystem::perms;
 using std::filesystem::directory_iterator;
 using std::filesystem::permissions;
 
-bool compile_template(const path &json_file, const path &template_file, const path &theme_out_dir,
-                      bool do_force, bool do_verbose);
+bool compile_template(const path &json_file, const path &template_file, const path &theme_out_dir);
 
-bool compile_theme(const std::string &theme, bool do_force, bool do_verbose) {
+bool compile_theme(const std::string &theme) {
     printInfoVerbose(do_verbose, "Compiling  theme '{theme:s}'.\n", "theme"_a = theme);
 
     path scheme_file_name;
@@ -78,14 +77,13 @@ bool compile_theme(const std::string &theme, bool do_force, bool do_verbose) {
     // Theme directory now exist
     auto templates_path = path{DataTemplatesDir};
     for (const auto &template_file : directory_iterator(templates_path)) {
-        compile_template(scheme_file_name, template_file, script_path, do_force, do_verbose);
+        compile_template(scheme_file_name, template_file, script_path);
     }
 
     return true;
 }
 
-bool compile_template(const path &json_file, const path &template_file, const path &theme_out_dir,
-                      bool do_force, bool do_verbose) {
+bool compile_template(const path &json_file, const path &template_file, const path &theme_out_dir) {
 
     inja::Environment env;
     path result_file = theme_out_dir / template_file.filename();
