@@ -1,0 +1,8 @@
+<svg width="330" height="330">
+    <rect fill="{{ background }}" x="0" y="0" width="330" height="330"></rect>
+    <text x="180" y="35" fill="{{ foreground }}" text-anchor="middle" alignment-baseline="central" font-size="24">{{ name }}</text>
+    <text x="10" y="75" fill="{{ foreground }}" text-anchor="start"  alignment-baseline="baseline" font-size="14">FG: {{ foreground }}. BG: {{
+   background }}</text>
+{% for c in color %}
+{{ svg_rect(loop.index1, c) }}{% endfor %}
+</svg>

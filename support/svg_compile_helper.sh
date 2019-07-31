@@ -27,10 +27,10 @@ out_file="${top_dir}/data/themes/Solarized.light/preview.png"
 
 echo "Watching ${svg_file}"
 inotifywait -e close_write,moved_to,create -m "${svg_dir}" |
-while read -r directory events filename; do
-  if [ "$filename" = "preview.svg" ]; then
-     ${top_dir}/./ct-build -- ./ccthemegen -vf Solarized.light
+  while read -r directory events filename; do
+    if [ "$filename" = "preview.svg" ]; then
+      ${top_dir}/./ct-build -- ./ccthemegen -vf Solarized.light
       inkscape -z -e "${out_file}" -w 300 -h 100 "${svg_file}"
-#      cairosvg-py3 "${svg_file}" -o "${out_file}"
-  fi
-done
+      #      cairosvg-py3 "${svg_file}" -o "${out_file}"
+    fi
+  done

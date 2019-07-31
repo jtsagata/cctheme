@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
 
 if [[ "$1" == "reset" ]]; then
-    dconf reset -f /org/gnome/terminal/legacy/profiles:/
-    exit
+  dconf reset -f /org/gnome/terminal/legacy/profiles:/
+  exit
 fi
 
 dset() {
-    local key="$1"; shift
-    local val="$1"; shift
+  local key="$1"
+  shift
+  local val="$1"
+  shift
 
-#    if [[ "$type" == "string" ]]; then
-#        val="'$val'"
-#    fi
+  #    if [[ "$type" == "string" ]]; then
+  #        val="'$val'"
+  #    fi
 
-    dconf write "$PROFILE_KEY/$key" "$val"
+  dconf write "$PROFILE_KEY/$key" "$val"
 }
-
 
 profile=$(gsettings get org.gnome.Terminal.ProfilesList default)
 profile_id=${profile:1:-1}
